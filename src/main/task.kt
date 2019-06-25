@@ -24,12 +24,34 @@ class InMemoryBroker : BaseBroker() {
       (ii) demos
       (iii) the watchdog task.
     Do not use this broker in production or anywhere else that you care about.
+
+    {
+        "queue1": ["item1", "item2", "item3"],
+        "queue2": ["item1", "item2", "item3"]
+        ...
+    }
      */
+    private val store = HashMap<String, ArrayList<String>>()
+
+
     override fun check(queueName: String) {
+        if (!store.containsKey(queueName)) {
+            store[queueName] = ArrayList<String>()
+        }
+        println("store")
+        println(store)
         println("InMemoryBroker.check called with     queueName: $    queueName")
     }
 
     override fun enqueue(queueName: String, item: String): Unit {
+        if (store.containsKey(queueName)) {
+            store[queueName]?.add(item)
+        } else {
+            store[queueName] = ArrayList<String>()
+            store[queueName]?.add(item)
+        }
+        println("store2")
+        println(store)
         println("InMemoryBroker.enqueue called with     queueName: $    queueName and item: $item")
     }
 
@@ -77,6 +99,8 @@ interface BaseTask {
 
     fun delay(vararg args: String): Unit {
         println("Task.delay called with args: $args :: argsAsList: ${args.toList()}")
+
+        broker.check(queueName)
         val jsonData = json.stringify(TaskArgs.serializer(StringSerializer), TaskArgs(args = args.toList()))
         broker.enqueue(queueName = queueName, item = jsonData)
     }
@@ -112,4 +136,7 @@ fun main(): Unit {
     // assuming the run method has a signature like;
     // .run(log_id, age, name)
     tsk.delay("qejq4j242", "90", "John")
+
+    tsk.delay("222", "22", "kili")
+    tsk.delay("333", "333", "mili")
 }
