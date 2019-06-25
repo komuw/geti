@@ -34,6 +34,7 @@ sourceSets {
     }
 }
 
+
 tasks.jar {
     manifest {
         attributes(
