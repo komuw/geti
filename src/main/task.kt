@@ -95,7 +95,12 @@ class ExampleTask(
         override val drainDuration: Float = 10.0f,
         override val logLevel: String = "INFO",
         override val json: Json = Json(JsonConfiguration.Stable)
-) : BaseTask {}
+) : BaseTask {
+    override fun run(vararg args: String): Any {
+        println("ExampleTask.run called with args: $args :: argsAsList: ${args.toList()}")
+        return 1
+    }
+}
 
 
 fun main(): Unit {
