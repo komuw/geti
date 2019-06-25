@@ -1,3 +1,10 @@
+import kotlinx.serialization.*
+import kotlinx.serialization.json.*
+
+@Serializable
+data class Data(val a: Int, val b: String = "42")
+
+
 open class BaseBroker {
     open fun check(queueName: String): Unit {}
 
@@ -91,4 +98,15 @@ fun main(): Unit {
     // assuming the run method has a signature like;
     // .run(log_id, age, name)
     tsk.delay("qejq4j242", 90, "John")
+
+
+
+    val json = Json(JsonConfiguration.Stable)
+    // serializing objects
+    val jsonData = json.stringify(Data.serializer(), Data(42))
+
+    println()
+    println("jsonData")
+    println(jsonData)
+    println()
 }
