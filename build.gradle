@@ -10,7 +10,7 @@ buildscript {
         serialization_version = "0.11.0"
         appName = "geti"
         appVersion = "v0.0.1"
-        mainClass = "TaskKt"
+        mainClass = "geti.TaskKt"
     }
 
     repositories {
