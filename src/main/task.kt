@@ -34,9 +34,9 @@ class InMemoryBroker : BaseBroker() {
     }
 
     override fun done(
-        queueName: String,
-        item: String,
-        state: String
+            queueName: String,
+            item: String,
+            state: String
     ): Unit { // replace type of state with "task.TaskState"
         println("InMemoryBroker.done called with     queueName: $    queueName item: $item and state: $state ")
     }
@@ -47,17 +47,17 @@ class InMemoryBroker : BaseBroker() {
 }
 
 class Task(
-    val broker: BaseBroker,
-    val queueName: String,
-    val taskName: String,
-    /**
-    [drainDuration] is the duration(in seconds) that a worker should wait
-    after getting a termination signal(SIGTERM, SIGQUIT etc).
-    during this duration, the worker does not consumer anymore tasks from the broker,
-    the worker will continue executing any tasks that it had already dequeued from the [broker]
-     */
-    private val drainDuration: Float = 10.0f,
-    private val logLevel: String = "INFO"
+        val broker: BaseBroker,
+        val queueName: String,
+        val taskName: String,
+        /**
+        [drainDuration] is the duration(in seconds) that a worker should wait
+        after getting a termination signal(SIGTERM, SIGQUIT etc).
+        during this duration, the worker does not consumer anymore tasks from the broker,
+        the worker will continue executing any tasks that it had already dequeued from the [broker]
+         */
+        private val drainDuration: Float = 10.0f,
+        private val logLevel: String = "INFO"
 ) {
 
     fun aha(): Unit {
@@ -70,6 +70,11 @@ class Task(
 
     fun delay(vararg kwargs: Any): Unit {
         println("Task.delay called with kwargs: $kwargs and kwargsAsList: ${kwargs.toList()}")
+        val numberOfArgs = kwargs.size
+        println("numberOfArgs: $numberOfArgs")
+        for (item in kwargs) {
+            println(item)
+        }
         broker.enqueue(queueName = queueName, item = "DummyItem")
     }
 }
