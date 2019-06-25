@@ -10,3 +10,8 @@ It is a bit like [Celery](https://github.com/celery/celery)
 
 
 
+#### build
+```bash
+gradle build
+java -jar build/libs/geti.jar
+```
