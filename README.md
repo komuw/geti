@@ -15,3 +15,5 @@ It is a bit like [Celery](https://github.com/celery/celery)
 gradle build
 java -jar build/libs/geti.jar
 ```
+![configure intellij to use gradle 1](./docs/configure-intellij-use-gradle1.png "configure intellij to use gradle 1")
+![configure intellij to use gradle 2](./docs/configure-intellij-use-gradle2.png "configure intellij to use gradle 2")
