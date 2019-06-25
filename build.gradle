@@ -1,0 +1,80 @@
+apply plugin: 'kotlin'
+apply plugin: 'kotlinx-serialization'
+
+buildscript {
+    // because the buildscript block is evaluated first,
+    // the variable definitions must go in the buildscript block like this:
+    // https://wtanaka.com/node/8111
+    ext {
+        kotlin_version = "1.3.40"
+        serialization_version = "0.11.0"
+        appName = "geti"
+        appVersion = "v0.0.1"
+        mainClass = "TaskKt"
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:${kotlin_version}"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the outer `dependencies` block
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${serialization_version}"
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+    }
+}
+
+
+sourceSets {
+    main {
+        java {
+            srcDir("src/main")
+        }
+    }
+    test {
+        java {
+            srcDir("src/test")
+        }
+    }
+}
+jar {
+    manifest {
+        attributes("appName": "${appName}",
+                "appVersion": "${appVersion}",
+        "Main-Class": "${mainClass}")
+    }
+
+    // This line of code recursively collects and copies all of a project's files
+    // and adds them to the JAR itself. One can extend this task, to skip certain
+    // files or particular types at will
+    // see: https://docs.gradle.org/current/userguide/working_with_files.html#sec:creating_uber_jar_example
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar') }.collect { zipTree(it) }
+    }
+}
+
+
+compileKotlin {
+    // https://kotlinlang.org/docs/reference/using-gradle.html#compiler-options
+    kotlinOptions {
+        allWarningsAsErrors = true
+    }
+}
+
+// run;
+//   gradle build
+//   java -jar build/libs/geti.jar
