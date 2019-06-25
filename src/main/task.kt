@@ -1,10 +1,7 @@
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-
-@Serializable
-data class Data(val a: Int, val b: String = "42")
-
 
 open class BaseBroker {
     open fun check(queueName: String): Unit {}
@@ -54,6 +51,10 @@ class InMemoryBroker : BaseBroker() {
     }
 }
 
+
+@Serializable
+data class TaskArgs<T>(val args: List<T>)
+
 class Task(
         val broker: BaseBroker,
         val queueName: String,
@@ -68,6 +69,8 @@ class Task(
         private val logLevel: String = "INFO"
 ) {
 
+    private val json = Json(JsonConfiguration.Stable)
+
     fun aha(): Unit {
         println(broker)
         println(queueName)
@@ -76,15 +79,10 @@ class Task(
         println(logLevel)
     }
 
-    fun delay(vararg args: Any): Unit {
+    fun delay(vararg args: String): Unit {
         println("Task.delay called with args: $args and argsAsList: ${args.toList()}")
-        val numberOfArgs = args.size
-        println("numberOfArgs: $numberOfArgs")
-        for (item in args) {
-            println(item)
-        }
-        // TODO: json seriliaze the args and then enqueue them in the broker
-        broker.enqueue(queueName = queueName, item = "DummyItem")
+        val jsonData = json.stringify(TaskArgs.serializer(StringSerializer), TaskArgs(args = args.toList()))
+        broker.enqueue(queueName = queueName, item = jsonData)
     }
 }
 
@@ -98,15 +96,5 @@ fun main(): Unit {
 
     // assuming the run method has a signature like;
     // .run(log_id, age, name)
-    tsk.delay("qejq4j242", 90, "John")
-
-
-    val json = Json(JsonConfiguration.Stable)
-    // serializing objects
-    val jsonData = json.stringify(Data.serializer(), Data(42))
-
-    println()
-    println("jsonData")
-    println(jsonData)
-    println()
+    tsk.delay("qejq4j242", "90", "John")
 }
