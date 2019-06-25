@@ -30,14 +30,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${serialization_version}"
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-    }
+repositories {
+    google()
+    jcenter()
+    maven { url "https://kotlin.bintray.com/kotlinx" } // required for kotlinx-serialization
 }
-
 
 sourceSets {
     main {
