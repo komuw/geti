@@ -35,29 +35,27 @@ class InMemoryBroker : BaseBroker() {
 
 
     override fun check(queueName: String) {
+        println("InMemoryBroker.check called with queueName: $queueName")
         if (!store.containsKey(queueName)) {
             store[queueName] = ArrayList<String>()
         }
-        println("store")
-        println(store)
-        println("InMemoryBroker.check called with     queueName: $    queueName")
     }
 
     override fun enqueue(queueName: String, item: String): Unit {
+        println("InMemoryBroker.enqueue called with queueName: $queueName and item: $item")
         if (store.containsKey(queueName)) {
             store[queueName]?.add(item)
         } else {
             store[queueName] = ArrayList<String>()
             store[queueName]?.add(item)
         }
-        println("store2")
+        println("store")
         println(store)
-        println("InMemoryBroker.enqueue called with     queueName: $    queueName and item: $item")
     }
 
     override fun dequeue(queueName: String): String {
-        println("InMemoryBroker.dequeue called with     queueName: $    queueName ")
-        return "TODO: implement InMemoryBroker.dequeue "
+        println("InMemoryBroker.dequeue called with queueName: $queueName ")
+        return "TODO: implement InMemoryBroker.dequeue"
     }
 
     override fun done(
@@ -65,11 +63,11 @@ class InMemoryBroker : BaseBroker() {
             item: String,
             state: String
     ): Unit { // replace type of state with "task.TaskState"
-        println("InMemoryBroker.done called with     queueName: $    queueName item: $item and state: $state ")
+        println("InMemoryBroker.done called with queueName: $queueName item: $item and state: $state ")
     }
 
     override fun shutdown(queueName: String, duration: Float): Unit {
-        println("InMemoryBroker.shutdown called with     queueName: $    queueName duration: $duration")
+        println("InMemoryBroker.shutdown called with queueName: $queueName duration: $duration")
     }
 }
 
@@ -122,7 +120,7 @@ class ExampleTask(
 ) : BaseTask {
     override fun run(vararg args: String): Any {
         println("ExampleTask.run called with args: $args :: argsAsList: ${args.toList()}")
-        return 1
+        return args
     }
 }
 
