@@ -14,11 +14,11 @@ plugins {
 }
 
 repositories {
-    jcenter() 
+    jcenter()
 }
 
 dependencies {
-    implementation(kotlin("stdlib")) 
+    implementation(kotlin("stdlib"))
 }
 
 sourceSets {
@@ -38,9 +38,9 @@ sourceSets {
 tasks.jar {
     manifest {
         attributes(
-            "appName" to appName,
-            "appVersion" to appVersion,
-            "Main-Class" to mainClass
+                "appName" to appName,
+                "appVersion" to appVersion,
+                "Main-Class" to mainClass
         )
     }
 

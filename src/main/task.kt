@@ -68,13 +68,14 @@ class Task(
         println(logLevel)
     }
 
-    fun delay(vararg kwargs: Any): Unit {
-        println("Task.delay called with kwargs: $kwargs and kwargsAsList: ${kwargs.toList()}")
-        val numberOfArgs = kwargs.size
+    fun delay(vararg args: Any): Unit {
+        println("Task.delay called with args: $args and argsAsList: ${args.toList()}")
+        val numberOfArgs = args.size
         println("numberOfArgs: $numberOfArgs")
-        for (item in kwargs) {
+        for (item in args) {
             println(item)
         }
+        // TODO: json seriliaze the args and then enqueue them in the broker
         broker.enqueue(queueName = queueName, item = "DummyItem")
     }
 }
@@ -87,5 +88,7 @@ fun main(): Unit {
     println(tsk.aha())
     println(tsk.taskName)
 
-    tsk.delay("name", 90, tsk)
+    // assuming the run method has a signature like;
+    // .run(log_id, age, name)
+    tsk.delay("qejq4j242", 90, "John")
 }
