@@ -11,6 +11,7 @@ buildscript {
         appName = "geti"
         appVersion = "v0.0.1"
         mainClass = "geti.MainKt"
+        fuelHttpLibVer = "2.1.0"
     }
 
     repositories {
@@ -28,6 +29,7 @@ buildscript {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:${serialization_version}"
+    implementation "com.github.kittinunf.fuel:fuel:$fuelHttpLibVer"
 }
 
 repositories {
