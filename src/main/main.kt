@@ -1,5 +1,6 @@
 package geti
 
+import com.github.kittinunf.fuel.Fuel
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
@@ -13,6 +14,10 @@ class HttpTask : BaseTask {
 
     override fun run(args: HashMap<String, String>): Unit {
         println("ExampleTask.run called with args: $args ")
+
+        val req = Fuel.get(args["url"] as String)
+        val resp = req.responseString()
+        println(resp)
     }
 }
 
@@ -22,14 +27,12 @@ fun main(): Unit {
     println("main")
     println(tsk.taskName)
 
-    // assuming the run method has a signature like;
-    // .run( name)
-    tsk.delay(hashMapOf("name" to "komu", "age" to "27"))
+    // queue tasks
+    tsk.delay(hashMapOf("url" to "https://httpbin.org/get"))
+    tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/3"))
+    tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/7"))
 
-    tsk.delay(hashMapOf("name" to "Jean", "age" to "37"))
-    tsk.delay(hashMapOf("name" to "Ole", "age" to "57"))
-
-
+    // run workers
     val worker = Worker(task = tsk, workerId = "workerId")
     worker.consumeTasks()
 }
