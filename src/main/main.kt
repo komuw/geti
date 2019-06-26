@@ -7,12 +7,6 @@ class ExampleTask(
         override val broker: BaseBroker,
         override val queueName: String,
         override val taskName: String,
-        /**
-        [drainDuration] is the duration(in seconds) that a worker should wait
-        after getting a termination signal(SIGTERM, SIGQUIT etc).
-        during this duration, the worker does not consumer anymore tasks from the broker,
-        the worker will continue executing any tasks that it had already dequeued from the [broker]
-         */
         override val drainDuration: Float = 10.0f,
         override val logLevel: String = "INFO",
         override val json: Json = Json(JsonConfiguration.Stable)
