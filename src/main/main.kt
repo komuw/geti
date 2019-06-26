@@ -29,4 +29,8 @@ fun main(): Unit {
 
     tsk.delay("222", "22", "kili")
     tsk.delay("333", "333", "mili")
+
+
+    val worker = Worker(task = tsk, workerId = "workerId")
+    worker.consumeTasks()
 }
