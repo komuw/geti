@@ -3,14 +3,14 @@ package geti
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
-class ExampleTask(
-        override val broker: BaseBroker,
-        override val queueName: String,
-        override val taskName: String,
-        override val drainDuration: Float = 10.0f,
-        override val logLevel: String = "INFO",
-        override val json: Json = Json(JsonConfiguration.Stable)
-) : BaseTask {
+class ExampleTask : BaseTask {
+    override val broker = InMemoryBroker()
+    override val queueName = "queueName"
+    override val taskName = "MyTaskName"
+    override val drainDuration: Float = 10.0f
+    override val logLevel: String = "INFO"
+    override val json: Json = Json(JsonConfiguration.Stable)
+
     override fun run(vararg args: String): Any {
         println("ExampleTask.run called with args: $args :: argsAsList: ${args.toList()}")
         return args
@@ -19,8 +19,7 @@ class ExampleTask(
 
 
 fun main(): Unit {
-    val b = InMemoryBroker()
-    val tsk = ExampleTask(broker = b, queueName = "queueName", taskName = "MyTaskName")
+    val tsk = ExampleTask()
     println("main")
     println(tsk.taskName)
 
