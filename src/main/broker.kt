@@ -51,7 +51,7 @@ class InMemoryBroker : BaseBroker {
         println("InMemoryBroker.dequeue called with queueName: $queueName ")
         val item: String? = store[queueName]?.removeAt(0)
 
-        if (item.isNullOrEmpty() ) {
+        if (item.isNullOrEmpty()) {
             println("the queue is empty. maybe sleep")
             // TODO: sleep in a coroutine
 

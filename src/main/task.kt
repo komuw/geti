@@ -33,4 +33,3 @@ interface BaseTask {
         broker.enqueue(queueName = queueName, item = jsonData)
     }
 }
-
