@@ -23,10 +23,7 @@ interface BaseTask {
     val logLevel: String
     val json: Json
 
-    fun run(vararg args: String): Any {
-        println("Task.run called with args: $args :: argsAsList: ${args.toList()}")
-        return 1
-    }
+    fun run(vararg args: String): Any
 
     fun delay(vararg args: String): Unit {
         println("Task.delay called with args: $args :: argsAsList: ${args.toList()}")

@@ -1,20 +1,17 @@
 package geti
 
-open class BaseBroker {
-    open fun check(queueName: String): Unit {}
+interface BaseBroker {
+    fun check(queueName: String): Unit
+    fun enqueue(queueName: String, item: String): Unit
 
-    open fun enqueue(queueName: String, item: String): Unit {}
+    fun dequeue(queueName: String): String
 
-    open fun dequeue(queueName: String): String {
-        return "TODO: implement BaseBroker.dequeue"
-    }
+    fun done(queueName: String, item: String, state: String): Unit  // TODO: change sttate type to be "task.TaskState"
 
-    open fun done(queueName: String, item: String, state: String): Unit {} // "task.TaskState"
-
-    open fun shutdown(queueName: String, duration: Float): Unit {}
+    fun shutdown(queueName: String, duration: Float): Unit
 }
 
-class InMemoryBroker : BaseBroker() {
+class InMemoryBroker : BaseBroker {
     /*
      This broker should only be used for:
       (i) tests
