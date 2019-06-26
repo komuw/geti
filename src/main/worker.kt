@@ -1,6 +1,5 @@
 package geti
 
-import kotlinx.serialization.internal.StringSerializer
 
 class Worker(private val task: BaseTask, private val workerId: String) {
     /**
@@ -19,12 +18,12 @@ class Worker(private val task: BaseTask, private val workerId: String) {
         println("dequeue item")
         println(item)
 
-        val obj: TaskArgs<String> = task.json.parse(TaskArgs.serializer(StringSerializer), item)
+        val obj: TaskArgs = task.json.parse(TaskArgs.serializer(), item)
         println()
         println("parsed json obj")
         println(obj)
         println()
 
-        task.run(*obj.args.toTypedArray())
+        task.run(obj.arg)
     }
 }

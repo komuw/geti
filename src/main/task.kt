@@ -1,12 +1,11 @@
 package geti
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.internal.StringSerializer
 import kotlinx.serialization.json.Json
 
 
 @Serializable
-data class TaskArgs<T>(val args: List<T>)
+data class TaskArgs(val arg: String)
 
 
 interface BaseTask {
@@ -23,13 +22,13 @@ interface BaseTask {
     val logLevel: String
     val json: Json
 
-    fun run(vararg args: String): Any
+    fun run(arg: String): Any
 
-    fun delay(vararg args: String): Unit {
-        println("Task.delay called with args: $args :: argsAsList: ${args.toList()}")
+    fun delay(arg: String): Unit {
+        println("Task.delay called with arg: $arg ")
 
         broker.check(queueName)
-        val jsonData = json.stringify(TaskArgs.serializer(StringSerializer), TaskArgs(args = args.toList()))
+        val jsonData = json.stringify(TaskArgs.serializer(), TaskArgs(arg = arg))
         broker.enqueue(queueName = queueName, item = jsonData)
     }
 }

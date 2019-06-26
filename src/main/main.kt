@@ -11,9 +11,9 @@ class ExampleTask : BaseTask {
     override val logLevel: String = "INFO"
     override val json: Json = Json(JsonConfiguration.Stable)
 
-    override fun run(vararg args: String): Any {
-        println("ExampleTask.run called with args: $args :: argsAsList: ${args.toList()}")
-        return args
+    override fun run(arg: String): String {
+        println("ExampleTask.run called with arg: $arg ")
+        return arg
     }
 }
 
@@ -24,11 +24,11 @@ fun main(): Unit {
     println(tsk.taskName)
 
     // assuming the run method has a signature like;
-    // .run(log_id, age, name)
-    tsk.delay("qejq4j242", "90", "John")
+    // .run( name)
+    tsk.delay("John")
 
-    tsk.delay("222", "22", "kili")
-    tsk.delay("333", "333", "mili")
+    tsk.delay("kili")
+    tsk.delay("mili")
 
 
     val worker = Worker(task = tsk, workerId = "workerId")
