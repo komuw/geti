@@ -71,6 +71,7 @@ compileKotlin {
     // https://kotlinlang.org/docs/reference/using-gradle.html#compiler-options
     kotlinOptions {
         allWarningsAsErrors = true
+        jvmTarget = "12" //Target version of the generated JVM bytecod. default is 1.6
     }
 }
 
