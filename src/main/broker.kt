@@ -49,7 +49,14 @@ class InMemoryBroker : BaseBroker {
 
     override fun dequeue(queueName: String): String {
         println("InMemoryBroker.dequeue called with queueName: $queueName ")
-        return "TODO: implement InMemoryBroker.dequeue"
+        val item: String? = store[queueName]?.removeAt(0)
+
+        if (item.isNullOrEmpty() ) {
+            println("the queue is empty. maybe sleep")
+            // TODO: sleep in a coroutine
+
+        }
+        return item as String
     }
 
     override fun done(
