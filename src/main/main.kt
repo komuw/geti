@@ -5,6 +5,10 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
 class HttpTask : BaseTask {
+    /**
+     * This task makes http requests and
+     * then prints the response
+     */
     override val broker = InMemoryBroker()
     override val queueName = "queueName"
     override val taskName = "MyTaskName"
