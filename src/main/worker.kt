@@ -24,6 +24,6 @@ class Worker(private val task: BaseTask, private val workerId: String) {
         println(obj)
         println()
 
-        task.run(obj.arg)
+        task.run(obj.args)
     }
 }

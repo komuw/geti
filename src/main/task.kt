@@ -5,7 +5,7 @@ import kotlinx.serialization.json.Json
 
 
 @Serializable
-data class TaskArgs(val arg: String)
+data class TaskArgs(val args: HashMap<String, String>)
 
 
 interface BaseTask {
@@ -22,13 +22,13 @@ interface BaseTask {
     val logLevel: String
     val json: Json
 
-    fun run(arg: String): Any
+    fun run(args: HashMap<String, String>): Any
 
-    fun delay(arg: String): Unit {
-        println("Task.delay called with arg: $arg ")
+    fun delay(args: HashMap<String, String>): Unit {
+        println("Task.delay called with args: $args ")
 
         broker.check(queueName)
-        val jsonData = json.stringify(TaskArgs.serializer(), TaskArgs(arg = arg))
+        val jsonData = json.stringify(TaskArgs.serializer(), TaskArgs(args = args))
         broker.enqueue(queueName = queueName, item = jsonData)
     }
 }

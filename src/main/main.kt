@@ -11,9 +11,8 @@ class ExampleTask : BaseTask {
     override val logLevel: String = "INFO"
     override val json: Json = Json(JsonConfiguration.Stable)
 
-    override fun run(arg: String): String {
-        println("ExampleTask.run called with arg: $arg ")
-        return arg
+    override fun run(args: HashMap<String, String>): Unit {
+        println("ExampleTask.run called with args: $args ")
     }
 }
 
@@ -25,10 +24,10 @@ fun main(): Unit {
 
     // assuming the run method has a signature like;
     // .run( name)
-    tsk.delay("John")
+    tsk.delay(hashMapOf("name" to "komu", "age" to "27"))
 
-    tsk.delay("kili")
-    tsk.delay("mili")
+    tsk.delay(hashMapOf("name" to "Jean", "age" to "37"))
+    tsk.delay(hashMapOf("name" to "Ole", "age" to "57"))
 
 
     val worker = Worker(task = tsk, workerId = "workerId")
