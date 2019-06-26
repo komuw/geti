@@ -13,10 +13,10 @@ interface BaseTask {
     val queueName: String
     val taskName: String
     /**
-    [drainDuration] is the duration(in seconds) that a worker should wait
-    after getting a termination signal(SIGTERM, SIGQUIT etc).
-    during this duration, the worker does not consumer anymore tasks from the broker,
-    the worker will continue executing any tasks that it had already dequeued from the [broker]
+     * [drainDuration] is the duration(in seconds) that a worker should wait
+     * after getting a termination signal(SIGTERM, SIGQUIT etc).
+     * during this duration, the worker does not consumer anymore tasks from the broker,
+     * the worker will continue executing any tasks that it had already dequeued from the [broker]
      */
     val drainDuration: Float
     val logLevel: String

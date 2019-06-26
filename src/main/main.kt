@@ -3,7 +3,7 @@ package geti
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 
-class ExampleTask : BaseTask {
+class HttpTask : BaseTask {
     override val broker = InMemoryBroker()
     override val queueName = "queueName"
     override val taskName = "MyTaskName"
@@ -18,7 +18,7 @@ class ExampleTask : BaseTask {
 
 
 fun main(): Unit {
-    val tsk = ExampleTask()
+    val tsk = HttpTask()
     println("main")
     println(tsk.taskName)
 
