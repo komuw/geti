@@ -16,7 +16,7 @@ class HttpTask : BaseTask {
     override val logLevel: String = "INFO"
     override val json: Json = Json(JsonConfiguration.Stable)
 
-    override fun run(args: HashMap<String, String>): Unit {
+    override fun run(args: HashMap<String, String>) {
         println("ExampleTask.run called with args: $args ")
 
         val req = Fuel.get(args["url"] as String)
@@ -25,8 +25,7 @@ class HttpTask : BaseTask {
     }
 }
 
-
-fun main(): Unit {
+fun main() {
     val tsk = HttpTask()
     println("main")
     println(tsk.taskName)

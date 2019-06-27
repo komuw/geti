@@ -6,7 +6,7 @@ interface BaseBroker {
 
     fun dequeue(queueName: String): String
 
-    fun done(queueName: String, item: String, state: String): Unit  // TODO: change sttate type to be "task.TaskState"
+    fun done(queueName: String, item: String, state: String): Unit // TODO: change sttate type to be "task.TaskState"
 
     fun shutdown(queueName: String, duration: Float): Unit
 }
@@ -27,7 +27,6 @@ class InMemoryBroker : BaseBroker {
      */
     private val store = HashMap<String, ArrayList<String>>()
 
-
     override fun check(queueName: String) {
         println("InMemoryBroker.check called with queueName: $queueName")
         if (!store.containsKey(queueName)) {
@@ -35,7 +34,7 @@ class InMemoryBroker : BaseBroker {
         }
     }
 
-    override fun enqueue(queueName: String, item: String): Unit {
+    override fun enqueue(queueName: String, item: String) {
         println("InMemoryBroker.enqueue called with queueName: $queueName and item: $item")
         if (store.containsKey(queueName)) {
             store[queueName]?.add(item)
@@ -54,7 +53,6 @@ class InMemoryBroker : BaseBroker {
         if (item.isNullOrEmpty()) {
             println("the queue is empty. maybe sleep")
             // TODO: sleep in a coroutine
-
         }
         return item as String
     }
@@ -63,11 +61,11 @@ class InMemoryBroker : BaseBroker {
             queueName: String,
             item: String,
             state: String
-    ): Unit { // replace type of state with "task.TaskState"
+    ) { // replace type of state with "task.TaskState"
         println("InMemoryBroker.done called with queueName: $queueName item: $item and state: $state ")
     }
 
-    override fun shutdown(queueName: String, duration: Float): Unit {
+    override fun shutdown(queueName: String, duration: Float) {
         println("InMemoryBroker.shutdown called with queueName: $queueName duration: $duration")
     }
 }

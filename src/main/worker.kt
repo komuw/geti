@@ -1,6 +1,5 @@
 package geti
 
-
 class Worker(private val task: BaseTask, private val workerId: String) {
     /**
     docs
