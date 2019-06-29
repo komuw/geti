@@ -1,5 +1,7 @@
 package geti
+
 import  kotlinx.coroutines.delay
+
 interface BaseBroker {
     fun check(queueName: String): Unit
     fun enqueue(queueName: String, item: String): Unit
@@ -12,7 +14,7 @@ interface BaseBroker {
 }
 
 
-class BrokerException(message:String): Exception(message)
+class BrokerException(message: String) : Exception(message)
 
 class InMemoryBroker : BaseBroker {
     /*
@@ -51,7 +53,7 @@ class InMemoryBroker : BaseBroker {
 
     override suspend fun dequeue(queueName: String): String {
         while (true) {
-            if (!store.containsKey(queueName)){
+            if (!store.containsKey(queueName)) {
                 throw BrokerException("queue with name: $queueName does not exist.")
             }
 

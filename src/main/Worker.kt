@@ -23,7 +23,6 @@ class Worker(private val task: BaseTask, private val workerId: String) {
             println()
 
             launch {
-                //            doWorld()
                 task.run(obj.args)
             }
         }
