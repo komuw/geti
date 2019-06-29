@@ -16,7 +16,7 @@ class HttpTask : BaseTask {
     override val logLevel: String = "INFO"
     override val json: Json = Json(JsonConfiguration.Stable)
 
-    override fun run(args: HashMap<String, String>) {
+    override suspend fun run(args: HashMap<String, String>) {
         println("ExampleTask.run called with args: $args ")
 
         val req = Fuel.get(args["url"] as String)
@@ -34,6 +34,10 @@ fun main() {
     tsk.delay(hashMapOf("url" to "https://httpbin.org/get"))
     tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/3"))
     tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/7"))
+
+    for (i in 1..30) {
+        tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/2"))
+    }
 
     // run workers
     val worker = Worker(task = tsk, workerId = "workerId")
