@@ -5,12 +5,7 @@ import  kotlinx.coroutines.delay
 interface BaseBroker {
     fun check(queueName: String): Unit
     fun enqueue(queueName: String, item: String): Unit
-
     suspend fun dequeue(queueName: String): String
-
-    fun done(queueName: String, item: String, state: String): Unit // TODO: change sttate type to be "task.TaskState"
-
-    fun shutdown(queueName: String, duration: Float): Unit
 }
 
 
@@ -72,17 +67,5 @@ class InMemoryBroker : BaseBroker {
                 delay(10000L)
             }
         }
-    }
-
-    override fun done(
-            queueName: String,
-            item: String,
-            state: String
-    ) { // replace type of state with "task.TaskState"
-        println("InMemoryBroker.done called with queueName: $queueName item: $item and state: $state ")
-    }
-
-    override fun shutdown(queueName: String, duration: Float) {
-        println("InMemoryBroker.shutdown called with queueName: $queueName duration: $duration")
     }
 }
