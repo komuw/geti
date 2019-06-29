@@ -3,12 +3,11 @@ package geti
 
 import com.github.kittinunf.fuel.Fuel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
-
-import  kotlinx.coroutines.delay
 
 class HttpTask : BaseTask {
     /**
