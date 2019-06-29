@@ -40,8 +40,8 @@ class PrintTask : BaseTask {
     override val json: Json = Json(JsonConfiguration.Stable)
 
     override suspend fun run(args: HashMap<String, String>) {
-        println("PrintTask.run called with args: $args ")
         delay(6000L)
+        println("PrintTask.run called with args: $args ")
     }
 }
 
