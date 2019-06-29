@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-
 class Worker(private val task: BaseTask, private val workerId: String) {
     /**
     docs
@@ -23,13 +22,13 @@ class Worker(private val task: BaseTask, private val workerId: String) {
             println(obj)
             println()
 
-//            launch {
-            val job = launch(Dispatchers.Default) {
+            launch(Dispatchers.Default) {
+                // TODO: add  CoroutineName("geti-worker-coroutine")
                 //the dispatcher use; is backed by a shared pool of threads on JVM.
                 // the max no of threads used is equal to the number of CPU cores.
                 task.run(obj.args)
             }
-            job.invokeOnCompletion { println("DONE") }
+
         }
     }
 }
