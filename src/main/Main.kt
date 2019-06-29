@@ -56,12 +56,12 @@ fun main() = runBlocking<Unit> {
     tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/3"))
     tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/7"))
 
-    for (i in 1..8) {
+    for (i in 1..80) {
         tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/2"))
     }
 
     val pt = PrintTask()
-    for (i in 1..30) {
+    for (i in 1..300) {
         pt.schedule(hashMapOf("name" to "John"))
     }
 

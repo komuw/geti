@@ -12,13 +12,13 @@ class Worker(private val task: BaseTask, private val workerId: String) {
     fun consumeTasks() = runBlocking<Unit> {
         println("workerId: $workerId")
         while (true) {
+            val item: String = task.broker.dequeue(task.queueName)
+            val tArgs: TaskArgs = task.json.parse(TaskArgs.serializer(), item)
+
             launch(Dispatchers.Default) {
                 // TODO: add  CoroutineName("geti-worker-coroutine")
                 //the dispatcher use; is backed by a shared pool of threads on JVM.
                 // the max no of threads used is equal to the number of CPU cores.
-
-                val item: String = task.broker.dequeue(task.queueName)
-                val tArgs: TaskArgs = task.json.parse(TaskArgs.serializer(), item)
                 task.run(tArgs.args)
             }
 
