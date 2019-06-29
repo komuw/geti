@@ -31,12 +31,12 @@ fun main() {
     println(tsk.taskName)
 
     // queue tasks
-    tsk.delay(hashMapOf("url" to "https://httpbin.org/get"))
-    tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/3"))
-    tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/7"))
+    tsk.schedule(hashMapOf("url" to "https://httpbin.org/get"))
+    tsk.schedule(hashMapOf("url" to "https://httpbin.org/schedule/3"))
+    tsk.schedule(hashMapOf("url" to "https://httpbin.org/schedule/7"))
 
     for (i in 1..30) {
-        tsk.delay(hashMapOf("url" to "https://httpbin.org/delay/2"))
+        tsk.schedule(hashMapOf("url" to "https://httpbin.org/schedule/2"))
     }
 
     // run workers

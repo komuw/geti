@@ -1,7 +1,7 @@
 package geti
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
@@ -24,12 +24,12 @@ class Worker(private val task: BaseTask, private val workerId: String) {
             println()
 
 //            launch {
-            val x = async(Dispatchers.Default) {
+            val job = launch(Dispatchers.Default) {
                 //the dispatcher use; is backed by a shared pool of threads on JVM.
                 // the max no of threads used is equal to the number of CPU cores.
                 task.run(obj.args)
             }
-            x.await()
+            job.invokeOnCompletion { println("DONE") }
         }
     }
 }
