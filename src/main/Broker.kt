@@ -1,15 +1,18 @@
 package geti
-
+import  kotlinx.coroutines.delay
 interface BaseBroker {
     fun check(queueName: String): Unit
     fun enqueue(queueName: String, item: String): Unit
 
-    fun dequeue(queueName: String): String
+    suspend fun dequeue(queueName: String): String
 
     fun done(queueName: String, item: String, state: String): Unit // TODO: change sttate type to be "task.TaskState"
 
     fun shutdown(queueName: String, duration: Float): Unit
 }
+
+
+class BrokerException(message:String): Exception(message)
 
 class InMemoryBroker : BaseBroker {
     /*
@@ -46,15 +49,27 @@ class InMemoryBroker : BaseBroker {
         println(store)
     }
 
-    override fun dequeue(queueName: String): String {
-        println("InMemoryBroker.dequeue called with queueName: $queueName ")
-        val item: String? = store[queueName]?.removeAt(0)
+    override suspend fun dequeue(queueName: String): String {
+        while (true) {
+            if (!store.containsKey(queueName)){
+                throw BrokerException("queue with name: $queueName does not exist.")
+            }
 
-        if (item.isNullOrEmpty()) {
-            println("the queue is empty. maybe sleep")
-            // TODO: sleep in a coroutine
+            try {
+                println("InMemoryBroker.dequeue called with queueName: $queueName ")
+                val item: String? = store[queueName]?.removeAt(0)
+
+                if (item.isNullOrEmpty()) {
+                    println("the queue is empty. maybe sleep")
+                    delay(10000L)
+                }
+                return item as String
+            } catch (e: IndexOutOfBoundsException) {
+                // TODO: figure this crudeness
+                println("queue is empty")
+                delay(10000L)
+            }
         }
-        return item as String
     }
 
     override fun done(
