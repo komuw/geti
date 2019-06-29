@@ -56,22 +56,22 @@ fun main() = runBlocking<Unit> {
     tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/3"))
     tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/7"))
 
-    for (i in 1..80) {
+    for (i in 1..8000) {
         tsk.schedule(hashMapOf("url" to "https://httpbin.org/delay/2"))
     }
 
     val pt = PrintTask()
-    for (i in 1..300) {
+    for (i in 1..3000) {
         pt.schedule(hashMapOf("name" to "John"))
     }
 
     // run workers
-    launch(Dispatchers.Default) {
+    launch(Dispatchers.IO) {
         val worker1 = Worker(task = tsk, workerId = "workerId-1")
         worker1.consumeTasks()
     }
 
-    launch(Dispatchers.Default) {
+    launch(Dispatchers.IO) {
         val worker2 = Worker(task = pt, workerId = "workerId-2")
         worker2.consumeTasks()
     }
