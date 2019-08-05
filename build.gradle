@@ -75,6 +75,7 @@ compileKotlin {
     kotlinOptions {
         allWarningsAsErrors = true
         jvmTarget = "12" //Target version of the generated JVM bytecod. default is 1.6
+        freeCompilerArgs = [ "-Xjsr305=strict"] // see: https://spring.io/guides/tutorials/spring-boot-kotlin/
     }
 }
 
