@@ -20,10 +20,10 @@ interface BaseTask {
     val logLevel: String
     val json: Json
 
-    fun run(args: HashMap<String, String>): Any
+    suspend fun run(args: HashMap<String, String>): Any
 
-    fun delay(args: HashMap<String, String>) {
-        println("Task.delay called with args: $args ")
+    fun schedule(args: HashMap<String, String>) {
+        println("Task.schedule called with args: $args ")
 
         broker.check(queueName)
         val jsonData = json.stringify(TaskArgs.serializer(), TaskArgs(args = args))
